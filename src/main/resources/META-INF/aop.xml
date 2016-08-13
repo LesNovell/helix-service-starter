@@ -1,0 +1,8 @@
+<aspectj>
+    <aspects>
+        <aspect name="com.helix.feature.jpa.transaction.TransactionalAspect"/>
+        <aspect name="com.helix.feature.worker.BlockingWorkerAspect"/>
+        <aspect name="com.helix.feature.context.RequestContextAspect"/>
+        <include within="com..*"/>
+    </aspects>
+</aspectj>

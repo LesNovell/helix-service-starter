@@ -1,0 +1,54 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+  <id>bin</id>
+  <formats>
+    <format>tar.gz</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <!--Include software.conf-->
+    <fileSet>
+      <directory>src/main/resources</directory>
+      <includes>
+        <include>software.conf</include>
+      </includes>
+      <outputDirectory></outputDirectory>
+      <!-- Be careful with this filter. Environment variables on Jenkins will substitute into this
+      file if it has the same names, even if they aren't prefixed with env. e.g. we'd expect ${env.MOCK_PORT} to be
+      filtered and not ${MOCK_PORT} but they both do! -->
+      <filtered>true</filtered>
+    </fileSet>
+    <!-- Include environment-specific "conf" files filtered during process-resources phase -->
+    <fileSet>
+      <directory>target/conf/</directory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+      <outputDirectory>conf</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>target</directory>
+      <outputDirectory>bin</outputDirectory>
+      <includes>
+        <include>${project.artifactId}-${project.version}-fat.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>target/quasar</directory>
+      <outputDirectory>/bin</outputDirectory>
+      <filtered>false</filtered>
+      <includes>
+        <include>**/*.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>src/main/scripts</directory>
+      <outputDirectory>bin</outputDirectory>
+      <includes>
+        <include>*</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+</assembly>

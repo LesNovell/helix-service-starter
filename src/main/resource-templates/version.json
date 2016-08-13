@@ -1,0 +1,5 @@
+{
+  "gitCommitId": "${git.hash}",
+  "gitRemoteOriginUrl": "${git.remote.origin.url}",
+  "namedAppVersion": "${project.version}"
+}
