@@ -1,13 +1,13 @@
 package com.helix.sample.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.helix.core.feature.AbstractFeature;
-import com.helix.feature.context.RequestContextFeature;
-import com.helix.feature.restclient.RestClientFeature;
-import com.helix.feature.restservice.controller.component.ControllerComponent;
-import com.helix.feature.restservice.controller.component.EndpointComponent;
-import com.helix.feature.restservice.controller.component.ErrorHandlerComponent;
-import com.helix.feature.restservice.marshal.JacksonMarshaller;
+import io.helixservice.core.feature.AbstractFeature;
+import io.helixservice.feature.context.RequestContextFeature;
+import io.helixservice.feature.restclient.RestClientFeature;
+import io.helixservice.feature.restservice.controller.component.ControllerComponent;
+import io.helixservice.feature.restservice.controller.component.EndpointComponent;
+import io.helixservice.feature.restservice.controller.component.ErrorHandlerComponent;
+import io.helixservice.feature.restservice.marshal.JacksonMarshaller;
 import com.helix.sample.error.ErrorHandlers;
 import com.helix.sample.hello.HelloController;
 import com.helix.sample.hello.HelloService;
@@ -15,8 +15,8 @@ import com.helix.sample.music.MusicSearchController;
 
 import java.util.UUID;
 
-import static com.helix.feature.restservice.controller.HttpMethod.DELETE;
-import static com.helix.feature.restservice.controller.HttpMethod.GET;
+import static io.helixservice.feature.restservice.controller.HttpMethod.DELETE;
+import static io.helixservice.feature.restservice.controller.HttpMethod.GET;
 
 public class SampleAppFeature extends AbstractFeature {
 

@@ -1,9 +1,9 @@
 package com.helix.sample.error;
 
-import com.helix.feature.restservice.controller.Request;
-import com.helix.feature.restservice.controller.Response;
-import com.helix.feature.restservice.error.jsonapi.ErrorData;
-import com.helix.feature.restservice.error.jsonapi.ErrorResponse;
+import io.helixservice.feature.restservice.controller.Request;
+import io.helixservice.feature.restservice.controller.Response;
+import io.helixservice.feature.restservice.error.jsonapi.ErrorData;
+import io.helixservice.feature.restservice.error.jsonapi.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,9 +1,11 @@
 package com.helix.sample.hello;
 
 import co.paralleluniverse.fibers.SuspendExecution;
+import co.paralleluniverse.strands.Strand;
 import com.helix.sample.entity.HelloAuditTrailEntity;
-import com.helix.feature.configuration.ConfigProperty;
-import com.helix.feature.worker.BlockingWorker;
+import io.helixservice.feature.configuration.ConfigProperty;
+import io.helixservice.feature.configuration.ConfigPropertyList;
+import io.helixservice.feature.worker.BlockingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ public class HelloService {
     // Use ConfigProperties to reference a set of properties with a certain prefix
     //
     private ConfigProperty delayInMs = new ConfigProperty("service.hello.delay");
+    private ConfigPropertyList testVar = new ConfigPropertyList("testvar");
 
     // Note: Injected by JPA transaction manager
     EntityManager entityManager;
@@ -32,6 +35,9 @@ public class HelloService {
     public HelloService() {
         // Example of how to watch a change on properties, and take some action
         delayInMs.setChangeListener(newValue -> LOG.warn("Delay has been set to " + newValue + " ms"));
+        testVar.setChangeListener(newValue -> {
+            LOG.warn("testvar is now " + newValue.toList());
+        });
     }
 
     @Transactional
@@ -49,7 +55,7 @@ public class HelloService {
 
             // Blocking Operation Here
             entityManager.persist(helloAuditTrailEntity);
-            Thread.sleep(delayInMs.asInt());
+            Strand.sleep(delayInMs.asInt());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

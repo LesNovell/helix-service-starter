@@ -2,11 +2,11 @@ package com.helix.sample.hello;
 
 import co.paralleluniverse.fibers.SuspendExecution;
 import com.helix.sample.error.RequestFailedException;
-import com.helix.feature.restservice.controller.HttpMethod;
-import com.helix.feature.restservice.controller.Request;
-import com.helix.feature.restservice.controller.Response;
-import com.helix.feature.restservice.controller.annotation.Controller;
-import com.helix.feature.restservice.controller.annotation.Endpoint;
+import io.helixservice.feature.restservice.controller.HttpMethod;
+import io.helixservice.feature.restservice.controller.Request;
+import io.helixservice.feature.restservice.controller.Response;
+import io.helixservice.feature.restservice.controller.annotation.Controller;
+import io.helixservice.feature.restservice.controller.annotation.Endpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -69,13 +69,13 @@ appender("ASYNC-ACCESS-LOG", AsyncAppender) {
 
 //    Note: the last arg is additivity=false. This means any lines from the AccessLogBodyEndHandler will only be logged
 //    to the appenders specified for this logger (e.g. ASYNC-ACCESS-LOG) and NOT in any other log file.
-logger("com.helix.feature.accesslog.AccessLogHandler", INFO, ["ASYNC-ACCESS-LOG"], false)
-logger("com.helix.feature.configuration", INFO)
-logger("com.helix.core.server", INFO)
-logger("com.uapi", INFO)
+logger("io.helixservice.feature.accesslog.AccessLogHandler", INFO, ["ASYNC-ACCESS-LOG"], false)
+logger("io.helixservice.feature.configuration", INFO)
+logger("io.helixservice.core.server", INFO)
+logger("com.helix", INFO)
 logger("AccessLog", INFO)
-//logger("com.helix.feature.jpa", INFO)
-//logger("com.helix.feature.worker", INFO)
+//logger("io.helixservice.helix.feature.jpa", INFO)
+//logger("io.helixservice.helix.feature.worker", INFO)
 
 // Send C3P0 logs to SlF4J
 System.setProperty("com.mchange.v2.log.MLog", "com.mchange.v2.log.slf4j.Slf4jMLog");

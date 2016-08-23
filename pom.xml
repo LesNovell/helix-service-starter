@@ -5,7 +5,7 @@
 
     <groupId>com.helix</groupId>
     <artifactId>helix-service-template-sample</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <prerequisites>
         <maven>3.2.0</maven>
@@ -19,6 +19,8 @@
 
     <properties>
         <default.jdk>1.8</default.jdk>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 
         <default.encoding>UTF-8</default.encoding>
         <!--
@@ -69,7 +71,7 @@
         <wiremock.version>1.53</wiremock.version>
 
         <!-- Vertx Sync properties -->
-        <quasar.version>0.7.5</quasar.version>
+        <quasar.version>0.7.6</quasar.version>
 
         <!-- Sonar. See: http://docs.sonarqube.org/display/SONAR/Analysis+Parameters -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -82,8 +84,10 @@
         <config.env>local</config.env>
         <mockito.version>1.10.19</mockito.version>
 
-        <quasar-core.version>LATEST</quasar-core.version>
-        <helix.version>0.9.8-SNAPSHOT</helix.version>
+        <quasar-core.version>0.7.6</quasar-core.version>
+        <aspectj.version>1.8.8</aspectj.version>
+
+        <helix.version>1.0.1</helix.version>
     </properties>
 
     <build>
@@ -113,9 +117,24 @@
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${resources.plugin.version}</version>
-                    <configuration>
-                        <encoding>${default.encoding}</encoding>
-                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>copy-resources</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${basedir}/target</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>src/scripts</directory>
+                                        <filtering>false</filtering>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <artifactId>maven-javadoc-plugin</artifactId>
@@ -316,25 +335,27 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/dist.xml</descriptor>
-                    </descriptors>
-                    <tarLongFileMode>posix</tarLongFileMode>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>assemble</id>
-                        <!-- Phase after fat jar created so can be included -->
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!---->
+            <!--<plugin>-->
+                <!--<artifactId>maven-assembly-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<archiveBaseDirectory>${project.basedir}</archiveBaseDirectory>-->
+                    <!--<descriptors>-->
+                        <!--<descriptor>src/main/assembly/dist.xml</descriptor>-->
+                    <!--</descriptors>-->
+                    <!--<tarLongFileMode>posix</tarLongFileMode>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>assemble</id>-->
+                        <!--&lt;!&ndash; Phase after fat jar created so can be included &ndash;&gt;-->
+                        <!--<phase>verify</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>single</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -368,8 +389,11 @@
                                 </transformer>
                             </transformers>
                             <artifactSet>
+                                <excludes>
+                                    <exclude>org.aspectj:aspectjweaver</exclude>
+                                </excludes>
                             </artifactSet>
-                            <outputFile>${project.build.directory}/${project.artifactId}-${project.version}-fat.jar</outputFile>
+                            <outputFile>${project.build.directory}/${project.artifactId}-fat.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -492,7 +516,14 @@
                                     <version>${quasar-core.version}</version>
                                     <classifier>jdk8</classifier>
                                     <type>jar</type>
-                                    <outputDirectory>${project.build.directory}/quasar</outputDirectory>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.aspectj</groupId>
+                                    <artifactId>aspectjweaver</artifactId>
+                                    <version>${aspectj.version}</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -531,28 +562,33 @@
             <version>${groovy.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.helix</groupId>
+            <groupId>io.helixservice</groupId>
             <artifactId>helix-core</artifactId>
             <version>${helix.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.helix</groupId>
+            <groupId>io.helixservice</groupId>
             <artifactId>helix-config</artifactId>
             <version>${helix.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.helix</groupId>
+            <groupId>io.helixservice</groupId>
             <artifactId>helix-metrics</artifactId>
             <version>${helix.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.helix</groupId>
+            <groupId>io.helixservice</groupId>
             <artifactId>helix-jpa</artifactId>
             <version>${helix.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.helix</groupId>
+            <groupId>io.helixservice</groupId>
             <artifactId>helix-rest</artifactId>
+            <version>${helix.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.helixservice</groupId>
+            <artifactId>helix-config-dynamodb</artifactId>
             <version>${helix.version}</version>
         </dependency>
 

@@ -1,8 +1,9 @@
 <aspectj>
     <aspects>
-        <aspect name="com.helix.feature.jpa.transaction.TransactionalAspect"/>
-        <aspect name="com.helix.feature.worker.BlockingWorkerAspect"/>
-        <aspect name="com.helix.feature.context.RequestContextAspect"/>
-        <include within="com..*"/>
+        <aspect name="io.helixservice.feature.jpa.transaction.TransactionalAspect"/>
+        <aspect name="io.helixservice.feature.worker.BlockingWorkerAspect"/>
+        <aspect name="io.helixservice.feature.context.RequestContextAspect"/>
+        <include within="com.helix..*"/>
+        <include within="io.helixservice..*"/>
     </aspects>
 </aspectj>

@@ -1,20 +1,21 @@
 package com.helix.sample;
 
-import com.helix.core.feature.Feature;
-import com.helix.core.server.HelixServer;
-import com.helix.feature.accesslog.AccessLogFeature;
-import com.helix.feature.configuration.ConfigurationFeature;
-import com.helix.feature.configuration.locator.ClasspathResourceLocator;
-import com.helix.feature.context.RequestContextFeature;
-import com.helix.feature.health.HealthCheckFeature;
-import com.helix.feature.jpa.JpaHibernateFeature;
-import com.helix.feature.jpa.transaction.DeclarativeTransactionsFeature;
-import com.helix.feature.metrics.MetricsFeature;
-import com.helix.feature.restclient.RestClientFeature;
-import com.helix.feature.restservice.RestServiceFeature;
-import com.helix.feature.vertx.VertxNativeFeature;
-import com.helix.feature.worker.BlockingWorkerFeature;
+import io.helixservice.core.feature.Feature;
+import io.helixservice.core.server.HelixServer;
+import io.helixservice.feature.accesslog.AccessLogFeature;
+import io.helixservice.feature.configuration.ConfigurationFeature;
+import io.helixservice.feature.configuration.locator.ClasspathResourceLocator;
+import io.helixservice.feature.context.RequestContextFeature;
+import io.helixservice.feature.health.HealthCheckFeature;
+import io.helixservice.feature.jpa.JpaHibernateFeature;
+import io.helixservice.feature.jpa.transaction.DeclarativeTransactionsFeature;
+import io.helixservice.feature.metrics.MetricsFeature;
+import io.helixservice.feature.restclient.RestClientFeature;
+import io.helixservice.feature.restservice.RestServiceFeature;
+import io.helixservice.feature.vertx.VertxNativeFeature;
+import io.helixservice.feature.worker.BlockingWorkerFeature;
 import com.helix.sample.configuration.SampleAppFeature;
+import io.helixservice.feature.configuration.dynamo.DynamoConfigFeature;
 
 public class Application {
     public static void main(String[] args) {
@@ -29,8 +30,9 @@ public class Application {
 
         // Enable Spring cloud config:
         // CloudConfigFeature cloudConfigFeature               = new CloudConfigFeature();
+        DynamoConfigFeature dynamoConfigFeature              = new DynamoConfigFeature();
 
-        return new Feature[] { configurationFeature };
+        return new Feature[] { configurationFeature, dynamoConfigFeature };
     }
 
     public static Feature[] installedFeatures() {
@@ -50,9 +52,9 @@ public class Application {
         SampleAppFeature sampleAppFeature                   = new SampleAppFeature(requestContextFeature, restClientFeature);
 
         return new Feature[] {
-                vertxNativeFeature, restServiceFeature, requestContextFeature, restClientFeature, accessLogFeature,
+                vertxNativeFeature, requestContextFeature, restClientFeature, accessLogFeature,
                 healthCheckFeature, jpaHibernateFeature, transactionFeature, blockingWorkerFeature, metricsFeature,
-                sampleAppFeature };
+                sampleAppFeature, restServiceFeature };
     }
 
     private static void displayBanner() {
