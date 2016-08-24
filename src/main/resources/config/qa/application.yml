@@ -1,0 +1,6 @@
+#
+# Add YAML properties here to override PROD environment settings
+# Properties from base/configuration.yaml are applied first, then settings here override those.
+#
+# Enable this configuration by passing -Dprofile=PROD during application startup
+#

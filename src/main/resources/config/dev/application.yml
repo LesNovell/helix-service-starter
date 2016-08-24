@@ -1,0 +1,6 @@
+#
+# Add YAML properties here to override DEV environment settings
+# Properties from base/configuration.yaml are applied first, then settings here override those.
+#
+# This is the default configuration if -Dprofile is not specified at application startup.
+#

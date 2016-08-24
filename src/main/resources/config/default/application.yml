@@ -1,0 +1,61 @@
+#
+# The following is the base property file for this service
+#
+# Properties defined here will apply to all deployment environments.
+# Any of these properties can be overriden in specific environment properties files.
+# See dev,preprod,prod, and qa directories.
+#
+service:
+  name: vertx-service-template-sample
+  hello.delay: 1000
+
+spring:
+  cloud.config:
+    enabled: true
+    uri: http://config.qatools.tm.tmcs:8080
+    username: tmdev
+    password: dev
+
+dynamo.config:
+  client.endpoint: https://dynamodb.us-east-1.amazonaws.com
+  access.key: XXX
+  secret.key: XXX
+  service.name: test
+  table.name: ServiceConfiguration
+  create.table: true
+
+vertx:
+  server:
+    port: 8080
+    instances: 1
+    workers: 50
+
+access-log:
+  hostname: resolve
+  loggerName: AccessLog
+  formatter: io.helixservice.feature.accesslog.DefaultAccessLogFormatter
+
+health-check:
+  forced-down-password: change-me
+
+jpa:
+  entity-packages: com.helix.sample.entity
+  provider:
+    hibernate:
+      show_sql: false
+      hbm2ddl.auto: update
+      dialect: org.hibernate.dialect.HSQLDialect
+      connection.driver_class: org.hsqldb.jdbc.JDBCDriver
+      connection.url: jdbc:hsqldb:mem:testDB
+      connection.username: sa
+      connection.password:
+      c3p0.min_size: 2
+      c3p0.max_size: 15
+      c3p0.max_statements: 100
+      c3p0.timeout: 1800
+      c3p0.validationQuery: SELECT 1
+
+testvar:
+  - "a"
+  - "b"
+  - "c"
